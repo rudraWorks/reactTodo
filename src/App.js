@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import Navbar from "./components/Navbar";
+import { useSelector } from "react-redux";
+import AppDiv from "./UI/AppDiv";
+import AddTask from "./components/AddTask";
+import PendingTasks from "./components/PendingTasks";
+import CompletedTasks from "./components/CompletedTasks";
+import PageContainer from "./UI/PageContainer";
 
 function App() {
+  const isDarkTheme = useSelector(state=>state.theme.darkTheme)
+  const showAddTask = useSelector(state=>state.pageToShow.addTask)
+  const showCompletedTasks = useSelector(state=>state.pageToShow.completedTasks)
+  const showPendingTasks = useSelector(state=>state.pageToShow.pendingTasks)
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppDiv color={isDarkTheme?"lightgray":"white"}>
+        <Navbar></Navbar>
+        <PageContainer>
+            {showAddTask &&  <AddTask/> }
+            { showPendingTasks &&  <PendingTasks/> }
+            {showCompletedTasks && <CompletedTasks/> }
+        </PageContainer>
+    </AppDiv>
   );
-}
+} 
 
 export default App;
